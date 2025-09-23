@@ -22,13 +22,13 @@ def displaying_info(user_select, computer_choice):
     print(f"Computer chose {emojis[computer_choice]}")
 
 def determining_winner(user_select, computer_choice):
-    if user_select == computer_choice:
-        print('It is a tie!')
+    winning_combinations = [('r', 's'), ('p', 'r'), ('s', 'p')]
 
-    elif (user_select == 'r' and computer_choice == 's') or \
-        (user_select == 'p' and computer_choice == 'r') or \
-        (user_select == 's' and computer_choice == 'p'):
+    if (user_select, computer_choice) in winning_combinations:
         print('You win!')
+
+    elif user_select == computer_choice:
+        print('It is a tie!')
 
     else: 
         print('You lose!')
