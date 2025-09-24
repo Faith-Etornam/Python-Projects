@@ -1,11 +1,3 @@
-exchange = ('USD', 'EUR', 'CAD')
-
-exchange_rates = {
-    'USD': {'EUR': 0.85, 'CAD': 1.25},
-    'EUR': {'USD': 1.18, 'CAD': 1.47},
-    'CAD': {'USD': 0.80, 'EUR': 0.68}
-}
-
 def user_input():
     while True:
         try:
@@ -17,39 +9,41 @@ def user_input():
             print("Invalid amount")
     return amount
 
-def source_currency_input():
+def currency_input(label):
+    exchange = ('USD', 'EUR', 'CAD')
     while True:
-        source_currency = input('Source currency (USD/EUR/CAD): ').upper()
-        if source_currency not in exchange:
+        currency = input(f'{label} currency (USD/EUR/CAD): ').upper()
+        if currency not in exchange:
             print('Invalid Currency')
         else: 
             break
-    return source_currency
-
-def target_currency_input():
-    while True:
-        target_currency = input('Target currency (USD/EUR/CAD): ').upper()
-        if target_currency not in exchange:
-            print('Invalid currency')
-        else:
-            break
-    return target_currency
+    return currency
     
+def conversion_logic(source_currency, target_currency, amount) -> float:
+
+    exchange_rates = {
+    'USD': {'EUR': 0.85, 'CAD': 1.25},
+    'EUR': {'USD': 1.18, 'CAD': 1.47},
+    'CAD': {'USD': 0.80, 'EUR': 0.68}
+}
+    
+    if source_currency == target_currency:
+        return amount
+    else:
+        return amount * exchange_rates[source_currency][target_currency]
+    
+
 def print_info(amount, source_currency, converted_amount):
     print(f"{amount} {source_currency} is equal to {converted_amount}")
 
 def conversion():
     amount = user_input()
 
-    source_currency = source_currency_input()
+    source_currency = currency_input('Source')
 
-    target_currency = target_currency_input()
+    target_currency = currency_input('Target')
 
-
-    if source_currency == target_currency:
-        converted_amount == amount
-    else:
-        converted_amount = amount * exchange_rates[source_currency][target_currency]
+    converted_amount = conversion_logic(source_currency, target_currency, amount)
 
     print_info(amount, source_currency, converted_amount)
 
